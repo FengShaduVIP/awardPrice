@@ -1,0 +1,37 @@
+<!--index.wxml-->
+<view class='index-class'>
+  <image class='bg-img' src="../../images/bg-img.png"></image>
+  <view class="container-out">
+    <view wx:key="{{index}}" class="circle" wx:for="{{circleList}}" 
+    style="top:{{item.topCircle}}rpx;left:{{item.leftCircle}}rpx;background-color: {{(index%2==0)?colorCircleFirst:colorCircleSecond}};"></view>
+    <view class="container-in">
+      <view class="content-out" wx:key="{{index}}" wx:for="{{awardList}}" style="top:{{item.topAward}}rpx;left:{{item.leftAward}}rpx;background-color: {{(index==indexSelect)?colorAwardSelect:colorAwardDefault}};">
+        <image class="award-image" src="{{item.imageAward}}"></image>
+      </view>
+      <view class="start-btn" bindtap="startGame" style=" background-color:{{isRunning?'#e7930a':'#ffe400'}}">
+      <text>{{isRunning?'抽奖中':'开始抽奖'}}</text>
+      </view>
+    </view>
+  </view>
+  <view > 
+    <input class="input_base" type="number" name="awardNum" adjust-position="true" focus="true" bindinput="setAwardNum"></input> 
+  </view> 
+  <view class="rich-text">
+    抽奖说明：
+  </view>
+  
+</view>
+
+<!--mask-->
+  <!--content-->
+  <!--使用animation属性指定需要执行的动画-->
+<!-- <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view> 
+<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}"> 
+  <view class="drawer_title">请输入抽奖号码</view> 
+  <view class="drawer_content">   
+    <view class="top grid"> 
+      <input class="input_base" type="number" name="awardNum" adjust-position="true" focus="true" bindinput="setAwardNum"></input> 
+    </view> 
+  </view> 
+  <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view> 
+</view> -->

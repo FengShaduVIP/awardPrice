@@ -1,0 +1,150 @@
+/**index.wxss**/
+.index-class{
+  width: 100%;
+  min-height:100%;
+  position: absolute;
+ }
+ .bg-img{
+  width: 100%;
+  min-height:100%;
+  background-size:100%;
+  position: fixed;
+  background: no-repeat;
+ }
+.container-out {
+  height: 600rpx;
+  width: 650rpx;
+  background-color: #de2a2c;
+  margin-top: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 33rpx;
+  position: relative;
+  box-shadow:3px 5px 5px rgb(83, 54, 27);
+}
+ 
+.container-in {
+  width: 580rpx;
+  height: 530rpx;
+  background-color: #fcc707;
+  border-radius: 36rpx;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  box-shadow:1px 2px 2px rgb(78, 77, 75);
+}
+ 
+/**小圆球
+box-shadow: inset 3px 3px 3px #fff2af;*/
+.circle {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  height: 20rpx;
+  width: 20rpx;
+}
+ 
+.content-out {
+  position: absolute;
+  height: 150rpx;
+  width: 166.6666rpx;
+  background-color: #f5f0fc;
+  border-radius: 15rpx;
+  box-shadow: 0px 5px 0px #e7930a;
+}
+ 
+/**居中 加粗*/
+ 
+.start-btn {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 15rpx;
+  height: 150rpx;
+  width: 166.6666rpx;
+  background-color: #ffe400;
+  box-shadow: 0 5px 0 #e7930a;
+  color: #f6251e;
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: bolder;
+  line-height: 150rpx;
+}
+ 
+.award-image {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 140rpx;
+  width: 130rpx;
+}
+
+.rich-text {
+  width: 100%;
+  position: absolute;
+  font-size: 35rpx;
+  color: rgb(253, 251, 251);
+}
+
+/**弹窗部分**/
+.drawer_screen { 
+ width: 100%; 
+ height: 100%; 
+ position: fixed; 
+ top: 0; 
+ left: 0; 
+ z-index: 1000; 
+ background: #000; 
+ opacity: 0.5; 
+ overflow: hidden; 
+}
+
+/*content*/
+.drawer_box { 
+  border-radius: 25rpx;
+  width: 650rpx; 
+  overflow: hidden; 
+  position: fixed; 
+  top: 50%; 
+  left: 0; 
+  z-index: 1001; 
+  background: #FAFAFA; 
+  margin: -150px 50rpx 0 50rpx; 
+}
+.drawer_title{ 
+ padding:12px; 
+ font: 18px "microsoft yahei"; 
+ text-align: center; 
+} 
+.drawer_content { 
+ height: 45px; 
+ overflow-y: scroll; /*超出父盒子高度可滚动*/
+} 
+.input_base {
+  margin-top: 15px;
+  margin-left: 10%;
+  margin-right: 10%;
+  display: block;
+  line-height: 2em;
+  color: #666;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #FFF;
+}
+.btn_ok{ 
+ padding: 10px; 
+ font: 20px "microsoft yahei"; 
+ text-align: center; 
+ border-top: 1px solid #E8E8EA; 
+ color: #3CC51F; 
+} 
