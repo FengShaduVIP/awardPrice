@@ -2,7 +2,7 @@
 .index-class{
   width: 100%;
   min-height:100%;
-  position: absolute;
+  position: fixed;
  }
  .bg-img{
   width: 100%;
@@ -15,11 +15,11 @@
   height: 600rpx;
   width: 650rpx;
   background-color: #de2a2c;
-  margin-top: 50%;
-  margin-left: auto;
+  top: 30%;
+  margin-left: 6%;
   margin-right: auto;
   border-radius: 33rpx;
-  position: relative;
+  position: absolute;
   box-shadow:3px 5px 5px rgb(83, 54, 27);
 }
  
@@ -76,7 +76,9 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
   font-weight: bolder;
   line-height: 150rpx;
 }
- 
+ /**
+ 奖品图片
+ */
 .award-image {
   position: absolute;
   margin: auto;
@@ -88,8 +90,11 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
   width: 130rpx;
 }
 
-.rich-text {
+.rich-text-1 {
+  text-align: right;
   width: 100%;
+  top:25%;
+  right: 30px;
   position: absolute;
   font-size: 35rpx;
   color: rgb(253, 251, 251);
@@ -129,8 +134,8 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
  height: 45px; 
  overflow-y: scroll; /*超出父盒子高度可滚动*/
 } 
+
 .input_base {
-  margin-top: 15px;
   margin-left: 10%;
   margin-right: 10%;
   display: block;
@@ -140,6 +145,7 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
   text-align: center;
   border-radius: 10px;
   background-color: #FFF;
+  position: absolute;
 }
 .btn_ok{ 
  padding: 10px; 

@@ -1,5 +1,6 @@
 //index.js 
 var call = require("../../utils/request.js")
+var modal = require("../../public/html/modal.js")
 //获取应用实例
 var app = getApp()
 Page({
@@ -10,6 +11,8 @@ Page({
     awardNum:5,//抽奖号码
     phoneNum:null,//输入的手机号
     showModalStatus: true,//是否显示弹窗
+    showModal:true,
+    showBtn:false,
     colorCircleFirst: '#FFDF2F',//圆点颜色1
     colorCircleSecond: '#FE4D32',//圆点颜色2
     colorAwardDefault: '#F5F0FC',//奖品默认颜色
@@ -135,23 +138,23 @@ Page({
   //开始抽奖
   startGame: function () {
     var _this = this;
-    if (!_this.data.isCanSelect){
-      wx.showModal({
-        content:"未填写抽奖号码不能进行抽奖！",
-        showCancel: false,//去掉取消按钮
-        success: function (res) {
-          if (res.confirm) {
-            _this.setData({
-              isCanSelect: false
-            })
-            wx.navigateBack({
-              delta: -1
-            })
-          }
-        }
-      })
-      return;
-    }
+    // if (!_this.data.isCanSelect){
+    //   wx.showModal({
+    //     content:"未填写抽奖号码不能进行抽奖！",
+    //     showCancel: false,//去掉取消按钮
+    //     success: function (res) {
+    //       if (res.confirm) {
+    //         _this.setData({
+    //           isCanSelect: false
+    //         })
+    //         wx.navigateBack({
+    //           delta: -1
+    //         })
+    //       }
+    //     }
+    //   })
+    //   return;
+    // }
     if (this.data.isRunning) return
     this.setData({
       isRunning: true
