@@ -115,42 +115,40 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
 
 /*content*/
 .drawer_box { 
+  margin: 0 auto;
   border-radius: 25rpx;
-  width: 650rpx; 
+  width: 100%; 
   overflow: hidden; 
-  position: fixed; 
-  top: 50%; 
-  left: 0; 
+  position: absolute; 
   z-index: 1001; 
-  background: #FAFAFA; 
-  margin: -150px 50rpx 0 50rpx; 
+  background:none;
+  top:26%;
 }
-.drawer_title{ 
- padding:12px; 
- font: 18px "microsoft yahei"; 
- text-align: center; 
-} 
-.drawer_content { 
- height: 45px; 
- overflow-y: scroll; /*超出父盒子高度可滚动*/
-} 
 
-.input_base {
-  margin-left: 10%;
-  margin-right: 10%;
-  display: block;
-  line-height: 2em;
-  color: #666;
-  font-size: 30px;
+.award-img{
+  margin-left: 4%;
+  width: 88%;
+  height: 290px;
+} 
+.award-text{
+  color: rgb(238, 88, 62);
   text-align: center;
-  border-radius: 10px;
-  background-color: #FFF;
+  font-size: 130%;
+  position:absolute;
+  left: 39%;
+  top:22%;
+}
+
+.btn_ok{ 
+  text-align: center;
+  border-radius: 25rpx;
+  position:relative;
+  height: 30px;
+  top:-15%;
+  width:40%;
+  left:30%;
+}
+
+.award-count{
   position: absolute;
 }
-.btn_ok{ 
- padding: 10px; 
- font: 20px "microsoft yahei"; 
- text-align: center; 
- border-top: 1px solid #E8E8EA; 
- color: #3CC51F; 
-} 

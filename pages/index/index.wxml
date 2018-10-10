@@ -4,7 +4,7 @@
     <image class='bg-img' src="../../images/bg-img.png"></image>
   </view>
   <view class="rich-text-1">
-    抽奖说明：
+    活动说明：
   </view>
   <view class="container-out">
     <view wx:key="{{index}}" class="circle" wx:for="{{circleList}}" 
@@ -18,21 +18,30 @@
       </view>
     </view>
   </view>  
+  <view class='award-count'>
+    <text>您还有1次抽奖机会</text>
+  </view>
+  <view class='award-logs'>
+
+    <view class='log-item'>
+
+    </view>
+  </view>
 </view>
 
-<modal show="{{showModal}}" showBtn="{{showBtn}}" height='60%' bindcancel="modalCancel" bindconfirm='modalConfirm'>
+<!-- <modal show="{{showModal}}" showBtn="{{showBtn}}" height='60%' bindcancel="modalCancel" bindconfirm='modalConfirm'>
   <view class='modal-content'>你自己的布局</view>
-</modal>
+</modal> -->
 <!--mask-->
   <!--content-->
   <!--使用animation属性指定需要执行的动画-->
-<!-- <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view> 
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view> 
 <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}"> 
-  <view class="drawer_title">请输入抽奖号码</view> 
-  <view class="drawer_content">   
-    <view class="top grid"> 
-      <input class="input_base" type="number" name="awardNum" adjust-position="true" focus="true" bindinput="setAwardNum"></input> 
-    </view> 
-  </view> 
-  <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view> 
-</view> -->
+  <view class='award-img'>
+    <view class='award-text'>
+      <text>{{textValue}}</text>
+    </view>
+    <image src="../../images/h5award.png" style='width:100%;height:100%;'></image>
+    <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view> 
+  </view>
+</view>

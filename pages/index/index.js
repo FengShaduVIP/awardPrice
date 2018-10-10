@@ -1,16 +1,16 @@
 //index.js 
 var call = require("../../utils/request.js")
-var modal = require("../../public/html/modal.js")
 //获取应用实例
 var app = getApp()
 Page({
   data: {
+    textValue:'一等奖',
     circleList: [],//圆点数组
     awardList: [],//奖品数组
     isCanSelect:false,//是否可以点击抽奖按钮
     awardNum:5,//抽奖号码
     phoneNum:null,//输入的手机号
-    showModalStatus: true,//是否显示弹窗
+    showModalStatus: false,//是否显示弹窗
     showModal:true,
     showBtn:false,
     colorCircleFirst: '#FFDF2F',//圆点颜色1
