@@ -11,8 +11,6 @@ Page({
     awardNum:5,//抽奖号码
     phoneNum:null,//输入的手机号
     showModalStatus: false,//是否显示弹窗
-    showModal:true,
-    showBtn:false,
     colorCircleFirst: '#FFDF2F',//圆点颜色1
     colorCircleSecond: '#FE4D32',//圆点颜色2
     colorAwardDefault: '#F5F0FC',//奖品默认颜色
@@ -291,6 +289,12 @@ Page({
   },
   fail :function(){
 
+  },
+  //跳转页面
+  toRulesPage:function(){
+    wx.navigateTo({
+      url: '../rules/index'
+    })
   }
 
 })

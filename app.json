@@ -2,6 +2,7 @@
   "pages":[
     "pages/index/index",
     "public/html/modal",
+    "pages/rules/index",
     "pages/logs/logs"
   ],
   "window":{
