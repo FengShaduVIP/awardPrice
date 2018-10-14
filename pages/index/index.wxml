@@ -3,6 +3,15 @@
   <view>
     <image class='bg-img' src="../../images/bg-img.png"></image>
   </view>
+  <view class='alert-msg'>
+    <swiper class="swiper_container" vertical="true" autoplay="true" circular="true" interval="2000">
+      <block wx:for="{{awardLogList}}">
+        <swiper-item>
+          <text>恭喜{{item.phoneNum}}用户，获得{{item.priceName}} {{item.time}}</text>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
   <view class="rich-text-1" bindtap='toRulesPage'>
     活动说明：
   </view>
@@ -14,34 +23,50 @@
         <image class="award-image" src="{{item.imageAward}}"></image>
       </view>
       <view class="start-btn" bindtap="startGame" style=" background-color:{{isRunning?'#e7930a':'#ffe400'}}">
-      <text>{{isRunning?'抽奖中':'开始抽奖'}}</text>
+      <image wx:if="{{!isRunning}}" style='height:150rpx;width:166.6666rpx' src='../../images/bg3.png'></image>
+      <text  wx:if="{{isRunning}}">抽奖中</text>
       </view>
     </view>
   </view>  
   <view class='award-count'>
-    <text>您还有1次抽奖机会</text>
-  </view>
-  <view class='award-logs'>
-
-    <view class='log-item'>
-
+    <view wx:if='{{awardNum<0}}'>
+      <button class='btn_phone' bindtap='showInputPhone'>我要抽奖</button>
+    </view>
+    <view wx:if='{{awardNum>=0}}' class='num-css'>
+      <text >您还有{{awardNum}}次抽奖机会</text>
     </view>
   </view>
 </view>
 
-<!-- <modal show="{{showModal}}" showBtn="{{showBtn}}" height='60%' bindcancel="modalCancel" bindconfirm='modalConfirm'>
-  <view class='modal-content'>你自己的布局</view>
-</modal> -->
 <!--mask-->
-  <!--content-->
-  <!--使用animation属性指定需要执行的动画-->
-<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view> 
+<view class="drawer_screen" data-statu="close" wx:if="{{showModalStatus}}" ></view> 
 <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}"> 
-  <view class='award-img'>
+  <!--输入手机号 -->
+  <view wx:if='{{showModalType==0}}' class="modal-dialog" >
+    <view class="modal-title">请输入参与活动手机号</view>
+    <view class="modal-content">
+      <view class="modal-input">
+        <input class="input" type="number"
+          bindinput="listenerPhoneInput" />
+      </view>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-confirm" bindtap="closeModal">确定</view>
+    </view>
+  </view>
+  <!-- 中奖页面 -->
+  <view class='award-img' wx:if='{{showModalType==1}}'>
     <view class='award-text'>
       <text>{{textValue}}</text>
     </view>
+    <view class='award-detail'>
+      <text>恭喜你获得 {{awardDetail}}</text>
+    </view>
     <image src="../../images/h5award.png" style='width:100%;height:100%;'></image>
-    <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view> 
+    <view class="btn_ok" bindtap="closeModal">确定</view> 
+  </view>
+  <!-- 活动说明页面 -->
+  <view wx:if='{{showModalType==2}}'>
+  
   </view>
 </view>

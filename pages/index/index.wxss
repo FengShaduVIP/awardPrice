@@ -11,6 +11,24 @@
   position: fixed;
   background: no-repeat;
  }
+ /**文字滚动样式-start**/
+.alert-msg{
+  text-align: center;
+  top: 20px;
+  position: relative;
+  background-color: #FFEAB2;
+  height: 20px;
+  width: 100%;
+}
+.swiper_container {
+  height: 18px;
+  text-align: center;
+  font-size: 15px;
+}
+
+
+
+ /**文字滚动样式-end**/
 .container-out {
   height: 600rpx;
   width: 650rpx;
@@ -86,15 +104,14 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
   left: 0;
   bottom: 0;
   right: 0;
-  height: 140rpx;
-  width: 130rpx;
+  height: 100rpx;
+  width: 120rpx;
 }
 
 .rich-text-1 {
-  text-align: right;
-  width: 100%;
+  width: 100ox;
   top:25%;
-  right: 30px;
+  left: 30px;
   position: absolute;
   font-size: 35rpx;
   color: rgb(253, 251, 251);
@@ -126,29 +143,106 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
 }
 
 .award-img{
-  margin-left: 4%;
-  width: 88%;
-  height: 290px;
+  /* margin-left: 4%; */
+  /* width: 88%; */
+  height: 320px;
 } 
 .award-text{
   color: rgb(238, 88, 62);
   text-align: center;
-  font-size: 130%;
+  font-size: 150%;
   position:absolute;
-  left: 39%;
+  width: 100%;
   top:22%;
 }
-
+.award-detail{
+  width: 100%;
+  color: rgb(238, 88, 62);
+  text-align: center;
+  position:absolute;
+  top:68%;
+}
 .btn_ok{ 
   text-align: center;
   border-radius: 25rpx;
   position:relative;
   height: 30px;
   top:-15%;
-  width:40%;
+  width:42%;
   left:30%;
 }
 
 .award-count{
+  top: 83%;
+  text-align: center;
+  width: 100%;
+  background:none;
   position: absolute;
+  z-index: 100;
+}
+.btn_phone{
+  width: 70%;
+  margin: 0 auto;
+  color: #FEFEFE;
+  height: 1.7em;
+  background-color:  rgb(252, 73, 73);
+  border-radius: 50rpx;
+  font-size: 35rpx;
+  line-height: 50rpx;
+  box-shadow: 1px 2px 1px rgb(114, 43, 43);
+}
+.num-css{
+  width: 70%;
+  margin: 0 auto;
+  height: auto;
+  color: #f6251e;
+  background-color: #FFE400;
+  border-radius: 20rpx;
+}
+
+.modal-dialog {
+  width: 540rpx;
+  overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  z-index: 9999;
+  background: #f9f9f9;
+  margin: -180rpx 105rpx;
+  border-radius: 36rpx;
+}
+
+.modal-title {
+  padding-top: 50rpx;
+  font-size: 36rpx;
+  color: #030303;
+  text-align: center;
+}
+
+.modal-content {
+  padding: 50rpx 32rpx;
+}
+
+.modal-input {
+  display: flex;
+  background: #fff;
+  border: 2rpx solid #ddd;
+  border-radius: 4rpx;
+  font-size: 28rpx;
+}
+
+.modal-footer {
+  display: flex;
+  flex-direction: row;
+  height: 86rpx;
+  border-top: 1px solid #dedede;
+  font-size: 34rpx;
+  line-height: 86rpx;
+}
+
+.btn-confirm {
+  width: 100%;
+  margin: 0 auto;  
+  color: #ec5300;
+  text-align: center;
 }

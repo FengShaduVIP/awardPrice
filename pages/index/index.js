@@ -4,39 +4,31 @@ var call = require("../../utils/request.js")
 var app = getApp()
 Page({
   data: {
-    textValue:'一等奖',
-    circleList: [],//圆点数组
-    awardList: [],//奖品数组
+    textValue:null,
+    awardDetail:null,
+    sixNum: 6,
+    eightNum: 8,
+    speed:120,
+    times: 0, //转动次数
+    cycle: 10, //转动基本次数：即至少需要转动多少次再进入抽奖环节
+    awardNum:-1,//抽奖次数
+    priceNum: null,//后台返回抽奖号码
+    showModalType:0,// 0：输入手机号，1：中奖页面，2：活动说明页面
     isCanSelect:false,//是否可以点击抽奖按钮
-    awardNum:5,//抽奖号码
+    times: 0, //转动次数
     phoneNum:null,//输入的手机号
     showModalStatus: false,//是否显示弹窗
-    colorCircleFirst: '#FFDF2F',//圆点颜色1
-    colorCircleSecond: '#FE4D32',//圆点颜色2
-    colorAwardDefault: '#F5F0FC',//奖品默认颜色
-    colorAwardSelect: '#ffe400',//奖品选中颜色
     indexSelect: null,//被选中的奖品index
     isRunning: false,//是否正在抽奖
-    textList:[
-      '<p><li><strong>奖品一 </strong> : iPhone8 plus 256G</li></p>',
-      '<p><li><strong>奖品二 </strong> : 美图v6手机</li></p>',
-      '<p><li><strong>奖品三 </strong> : AJ黑金正版鞋</li></p>',
-      '<p><li><strong>奖品四 </strong> : 加强版refa</li></p>',
-      '<p><li><strong>奖品五 </strong> : 888现金红包</li></p>',
-      '<p><li><strong>奖品六 </strong> : coco 香水</li></p>',
-      '<p><li><strong>奖品七 </strong> : 520现金红包</li></p>',
-      '<p><li><strong>奖品八 </strong> : mac 口红</li></p>',
-    ],
-    imageAward: [
-      '../../images/1.png',
-      '../../images/2.jpg',
-      '../../images/3.jpg',
-      '../../images/4.jpg',
-      '../../images/5.jpg',
-      '../../images/6.jpg',
-      '../../images/7.jpg',
-      '../../images/8.jpg',
-    ],//奖品图片数组
+    circleList: [],//圆点数组
+    awardList: [],//奖品数组
+    awardTextList:[],
+    awardLogList:[],
+    imageAward: [],//奖品图片数组
+    colorCircleFirst: '#FFDF2F',//圆点颜色1
+    colorCircleSecond: '#FE4D32',//圆点颜色2
+    colorAwardDefault: '#FFFFFF',//奖品默认颜色
+    colorAwardSelect: '#DE2A2C',//奖品选中颜色
   },
   initCircleData :function(){
     var _this = this;
@@ -91,6 +83,26 @@ Page({
       }
     }, 500)//设置圆点闪烁的效果
   },
+  initGetData:function(){
+    var _this = this;
+    call.getData('webpublic/awardlist', function (r) {
+      var imageAward = [];
+      for (var i = 0; i < r.list.length; i++) {
+        imageAward.push(call.picUrl + r.list[i].picUrl);
+      }
+      _this.setData({
+        awardTextList:r.list,
+        imageAward: imageAward
+      })
+      _this.initAwardListData();
+    }, this.fail);
+
+    call.getData('webpublic/awardLoglist', function (r) {
+      _this.setData({
+        awardLogList: r.list
+      })
+    }, this.fail);
+  },
   initAwardListData:function(){
     var _this = this;
     //奖品item设置
@@ -127,79 +139,20 @@ Page({
   onLoad: function () {
     //设置圆点数据
     this.initCircleData();
-    this.initAwardListData();   
+    this.initGetData();
   },
   //设置手机号码
-  setAwardNum: function (e) {
+  listenerPhoneInput: function (e) {
     this.data.phoneNum = e.detail.value;
   },
   //开始抽奖
   startGame: function () {
     var _this = this;
-    // if (!_this.data.isCanSelect){
-    //   wx.showModal({
-    //     content:"未填写抽奖号码不能进行抽奖！",
-    //     showCancel: false,//去掉取消按钮
-    //     success: function (res) {
-    //       if (res.confirm) {
-    //         _this.setData({
-    //           isCanSelect: false
-    //         })
-    //         wx.navigateBack({
-    //           delta: -1
-    //         })
-    //       }
-    //     }
-    //   })
-    //   return;
-    // }
-    if (this.data.isRunning) return
-    this.setData({
-      isRunning: true
-    })
-    var indexSelect = 1;
-    var i = 0;
-    var randomNum = parseInt(Math.random() * 10, 10);
-    var awardNum = (randomNum>4)?5:3
-    this.setData({
-      awardNum: awardNum
-    })
-    var maxNun = (randomNum+1)*8;
-    console.log("maxNun", maxNun);
-    var timer = setInterval(function () {
-      indexSelect++;
-      i += 1;
-      if (i > (maxNun+ _this.data.awardNum)) {
-        //去除循环
-        clearInterval(timer)
-        //获奖提示
-        wx.showModal({
-          title: '恭喜您',
-          content: '获得了第' + (_this.data.awardList[indexSelect].index+1) + "个奖品",
-          showCancel: false,//去掉取消按钮
-          success: function (res) {
-            if (res.confirm) {
-              _this.setData({
-                isRunning: false
-              })
-            }
-          }
-        })
-      }
-      indexSelect = indexSelect % 8;
-      _this.setData({
-        indexSelect: indexSelect,
-        isCanSelect: false
-      })
-    }, (200 + i));
-  },
-  powerDrawer: function (e) {
-    var _this = this;
-    var phoneNum = this.data.phoneNum;
-    //检验手机号码是否为空
-    if (phoneNum==null){
+    var _data = this.data;
+    if (_data.awardNum<1){
+      var typeText = (_data.phoneNum == null) ?"请先点击我要抽奖":"您目前无抽奖机会哦^-^";
       wx.showModal({
-        content: "未填写抽奖号码不能进行抽奖！",
+        content: typeText,
         showCancel: false,//去掉取消按钮
         success: function (res) {
           if (res.confirm) {
@@ -211,74 +164,132 @@ Page({
       })
       return;
     }
-    this.checkPhoneNum(e);
-    
-    
-  }, 
-  //弹窗部分 代码
-  util: function (currentStatu) {
-    /* 动画部分 */
-    // 第1步：创建动画实例 
-    var animation = wx.createAnimation({
-      duration: 200, //动画时长 
-      timingFunction: "linear", //线性 
-      delay: 0 //0则不延迟 
-    });
-    // 第2步：这个动画实例赋给当前的动画实例 
-    this.animation = animation;
-    // 第3步：执行第一组动画 
-    animation.opacity(0).rotateX(-100).step();
-    // 第4步：导出动画对象赋给数据对象储存 
+    if (this.data.isRunning) return
     this.setData({
-      animationData: animation.export()
+      isRunning: true     
     })
-    // 第5步：设置定时器到指定时候后，执行第二组动画 
-    setTimeout(function () {
-      // 执行第二组动画 
-      animation.opacity(1).rotateX(0).step();
-      // 给数据对象储存的第一组动画，更替为执行完第二组动画的动画对象 
-      this.setData({
-        animationData: animation
-      })
-      //关闭 
-      if (currentStatu == "close") {
-        this.setData(
-          {
-            showModalStatus: false,
-            isCanSelect:true
-          }
-        );
-      }
-    }.bind(this), 200)
-    // 显示 
-    if (currentStatu == "open") {
-      this.setData(
-        {
+    var indexSelect = 1;
+    var timer = setInterval(function () {
+      if (_data.times > _data.cycle + 10 && _data.priceNum*1-1 == _data.indexSelect) {
+        clearInterval(timer)
+        var awardTextList = _data.awardTextList;
+        _this.setData({
+          textValue: awardTextList[_data.indexSelect].id,
+          awardDetail: awardTextList[_data.indexSelect].name,
+          isRunning: false,
+          times:0,
+          speed:120,
+          showModalType: 1,
           showModalStatus: true
+        });
+      }else{
+        if (_data.times < _data.cycle) {
+          _this.setData({
+            speed: _data.speed-10
+          })
+        } else if (_data.times === _data.cycle){
+          if (_data.priceNum=="" || _data.priceNum == null || _data.priceNum == undefined) {
+            var index = Math.random() * 8 | 0; //静态演示，随机产生一个奖品序号，实际需请求接口产生
+            if (index > 4) {
+              _this.setData({
+                priceNum: _data.sixNum
+              })
+            } else {
+              _this.setData({
+                priceNum: _data.eightNum
+              })
+            }
+          }
+        } else {
+          if (_data.times > _data.cycle + 10 &&
+            ((_data.priceNum == 0 && _data.indexSelect == 7) || _data.priceNum == _data.indexSelect - 1)) {
+            _this.setData({
+              speed: _data.speed +10
+            })
+          } else {
+            _this.setData({
+              speed: _data.speed + 20
+            })
+          }
         }
-      );
-    }
+        if (_data.speed < 20) {
+          _this.setData({
+            speed: 20
+          })
+        };
+        indexSelect++;
+        indexSelect = indexSelect % 8;
+        _this.setData({
+          indexSelect: indexSelect,
+          times: _data.times + 1
+        })
+      }
+    }, _data.speed);
   },
+  
+  //弹窗部分 代码
+  closeModal: function () {
+    var _this = this;
+    if (_this.data.showModalType==0){
+      if (_this.checkPhone(_this.data.phoneNum)){
+        _this.checkPhoneNum();
+      }else{
+        wx.showModal({
+          content: "请输入正确格式手机号码",
+          showCancel: false,//去掉取消按钮
+          success: function (res) {
+            if (res.confirm) {
+              _this.setData({
+                showModalStatus: false,
+                isCanSelect: false
+              })
+            }
+          }
+        })
+        return;
+      }
+    }
+    if (this.data.showModalType ==1){
+      this.checkPhoneNum();
+    }
+    this.setData({
+      showModalStatus: false
+    });
+      
+  },
+  showInputPhone:function(){
+    if (this.data.isRunning) return
+    //显示输入手机号弹窗
+    this.setData({
+      showModalType:0,
+      showModalStatus: true
+    });
+  },
+  //请求后台查询手机号 参与次数
   checkPhoneNum:function(e){
     var phoneNum = this.data.phoneNum;
     call.getData('webpublic/checkAwardTimes?phoneNum=' + phoneNum, this.doAwardAction, this.fail);
   },
+
   doAwardAction: function (data){
     var _this = this;
     console.log("data",data)
     if (data.data) {
-      var currentStatu ='close';
       _this.setData({
+        awardNum:data.times,
+        priceNum: (data.priceNum) ? data.priceNum:null,
         showModalStatus: false,//是否显示弹窗
         isCanSelect:true
-      })
+      });
     } else {
       wx.showModal({
-        content: "该抽奖号码不能进行抽奖！",
+        content: "该抽奖号码未参与活动，不能进行抽奖。",
         showCancel: false,//去掉取消按钮
         success: function (res) {
           if (res.confirm) {
             _this.setData({
+              priceNum:null,
+              showModalStatus: false,
               isCanSelect: false
             })
           }
@@ -292,9 +303,41 @@ Page({
   },
   //跳转页面
   toRulesPage:function(){
+    if (this.data.isRunning) return
     wx.navigateTo({
       url: '../rules/index'
     })
+  },
+  checkPhone:function (a) {
+    var patrn = /^((?:13|14|15|16|17|18|19)\d{9}|0(?:10|2\d|[3-9]\d{2})[1-9]\d{6,7})$/;
+    if (!patrn.exec(a)) return false;
+    return true;
+  },
+  //文字跑马灯 滚动
+  run2: function () {
+    var vm = this;
+    var interval = setInterval(function () {
+      if (-vm.data.marqueeDistance2 < vm.data.length) {
+        // 如果文字滚动到出现marquee2_margin=30px的白边，就接着显示
+        vm.setData({
+          marqueeDistance2: vm.data.marqueeDistance2 - vm.data.marqueePace,
+          marquee2copy_status: vm.data.length + vm.data.marqueeDistance2 <= vm.data.windowWidth + vm.data.marquee2_margin,
+        });
+      } else {
+        if (-vm.data.marqueeDistance2 >= vm.data.marquee2_margin) { // 当第二条文字滚动到最左边时
+          vm.setData({
+            marqueeDistance2: vm.data.marquee2_margin // 直接重新滚动
+          });
+          clearInterval(interval);
+          vm.run2();
+        } else {
+          clearInterval(interval);
+          vm.setData({
+            marqueeDistance2: -vm.data.windowWidth
+          });
+          vm.run2();
+        }
+      }
+    }, vm.data.interval);
   }
-
 })
