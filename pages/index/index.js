@@ -250,7 +250,9 @@ Page({
       }
     }
     if (this.data.showModalType ==1){
-      this.checkPhoneNum();
+      this.setData({
+        awardNum: _this.data.awardNum-1
+      });
     }
     this.setData({
       showModalStatus: false
