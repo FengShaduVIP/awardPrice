@@ -29,6 +29,20 @@ Page({
     colorCircleSecond: '#FE4D32',//圆点颜色2
     colorAwardDefault: '#FFFFFF',//奖品默认颜色
     colorAwardSelect: '#DE2A2C',//奖品选中颜色
+    ruleList: [{
+      name: 'div',
+      attrs: {
+        class: 'div_class',
+        style: 'line-height: 35px;padding:10px 10px; color: red; margin-top:10px;'
+      },
+      children: [{
+        name: 'li',
+        children:[{
+          type: 'text',
+          text: 'Hello&nbsp;World!Hello&nbsp;World!Hello&nbsp;World!Hello&nbsp;World!Hello&nbsp;World!',
+        }]
+      }]
+    }]
   },
   initCircleData :function(){
     var _this = this;
@@ -96,7 +110,6 @@ Page({
       })
       _this.initAwardListData();
     }, this.fail);
-
     call.getData('webpublic/awardLoglist', function (r) {
       _this.setData({
         awardLogList: r.list
@@ -251,13 +264,14 @@ Page({
     }
     if (this.data.showModalType ==1){
       this.setData({
+        showModalStatus: false,
         awardNum: _this.data.awardNum-1
       });
+    } else if (this.data.showModalType == 2 || this.data.showModalType ==3){
+      this.setData({
+        showModalStatus: false,
+      });
     }
-    this.setData({
-      showModalStatus: false
-    });
-      
   },
   showInputPhone:function(){
     if (this.data.isRunning) return
@@ -306,40 +320,23 @@ Page({
   //跳转页面
   toRulesPage:function(){
     if (this.data.isRunning) return
-    wx.navigateTo({
-      url: '../rules/index'
-    })
+    this.setData({
+      showModalType:2,
+      showModalStatus:true
+    });
+  },
+  //跳转页面
+  toRulesPage2: function () {
+    if (this.data.isRunning) return
+    this.setData({
+      showModalType: 3,
+      showModalStatus: true
+    });
   },
   checkPhone:function (a) {
     var patrn = /^((?:13|14|15|16|17|18|19)\d{9}|0(?:10|2\d|[3-9]\d{2})[1-9]\d{6,7})$/;
     if (!patrn.exec(a)) return false;
     return true;
-  },
-  //文字跑马灯 滚动
-  run2: function () {
-    var vm = this;
-    var interval = setInterval(function () {
-      if (-vm.data.marqueeDistance2 < vm.data.length) {
-        // 如果文字滚动到出现marquee2_margin=30px的白边，就接着显示
-        vm.setData({
-          marqueeDistance2: vm.data.marqueeDistance2 - vm.data.marqueePace,
-          marquee2copy_status: vm.data.length + vm.data.marqueeDistance2 <= vm.data.windowWidth + vm.data.marquee2_margin,
-        });
-      } else {
-        if (-vm.data.marqueeDistance2 >= vm.data.marquee2_margin) { // 当第二条文字滚动到最左边时
-          vm.setData({
-            marqueeDistance2: vm.data.marquee2_margin // 直接重新滚动
-          });
-          clearInterval(interval);
-          vm.run2();
-        } else {
-          clearInterval(interval);
-          vm.setData({
-            marqueeDistance2: -vm.data.windowWidth
-          });
-          vm.run2();
-        }
-      }
-    }, vm.data.interval);
   }
+  
 })

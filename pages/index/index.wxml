@@ -1,19 +1,13 @@
 <!--index.wxml-->
-<view class='index-class'>
+<view class='index-class'> 
   <view>
     <image class='bg-img' src="../../images/bg-img.png"></image>
   </view>
-  <view class='alert-msg'>
-    <!-- <swiper class="swiper_container" vertical="true" autoplay="true" circular="true" interval="2000">
-      <block wx:for="{{awardLogList}}"  wx:key="{{index}}">
-        <swiper-item>
-          <text>恭喜{{item.phoneNum}}用户，获得{{item.priceName}} {{item.time}}</text>
-        </swiper-item>
-      </block>
-    </swiper> -->
+  <view class="rich-text-1" bindtap='toRulesPage2'>
+    活动奖品： 
   </view>
-  <view class="rich-text-1" bindtap='toRulesPage'>
-    活动说明：
+  <view class="rich-text-2" bindtap='toRulesPage'>
+    活动规则：
   </view>
   <view class="container-out">
     <view wx:key="{{index}}" class="circle" wx:for="{{circleList}}" 
@@ -39,7 +33,7 @@
 </view>
 
 <!--mask-->
-<view class="drawer_screen" data-statu="close" wx:if="{{showModalStatus}}" ></view> 
+<view class="drawer_screen" data-statu="close" wx:if="{{showModalStatus}}" bindtap="closeModal"></view> 
 <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}"> 
   <!--输入手机号 -->
   <view wx:if='{{showModalType==0}}' class="modal-dialog" >
@@ -66,7 +60,19 @@
     <view class="btn_ok" bindtap="closeModal">确定</view> 
   </view>
   <!-- 活动说明页面 -->
-  <view wx:if='{{showModalType==2}}'>
-  
+  <view wx:if='{{showModalType==2}}' style='width:90%;margin:0 auto;  border-radius: 36rpx;background-color:#fff;'>
+    <view style='width:100%;padding-top:10px;'>
+      <image src='../../images/rule.png' style='width:50%;height:25px;margin:0 auto;position: relative;left:25%'></image>
+    </view>
+    <rich-text nodes="{{ruleList}}"></rich-text>
+  </view>
+  <view wx:if='{{showModalType==3}}' style='width:90%;height:200px; margin:0 auto;  border-radius: 36rpx;background-color:#fff;'>
+    <swiper class="swiper_container" display-multiple-items="3" style='z-index:11;' vertical="true" autoplay="true" circular="true" interval="2000">
+      <block wx:for="{{awardLogList}}"  wx:key="{{index}}">
+        <swiper-item style='z-index:12;'>
+          <text>恭喜{{item.phoneNum}}用户，获得{{item.priceName}} {{item.time}}</text>
+        </swiper-item>
+      </block>
+    </swiper>
   </view>
 </view>

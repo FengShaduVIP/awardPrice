@@ -12,21 +12,11 @@
   background: no-repeat;
  }
  /**文字滚动样式-start**/
-.alert-msg{
-  text-align: center;
-  top: 20px;
-  position: relative;
-  background-color: #FFEAB2;
-  height: 20px;
-  width: 100%;
-}
 .swiper_container {
-  height: 18px;
+  height: 100px;
   text-align: center;
   font-size: 15px;
 }
-
-
 
  /**文字滚动样式-end**/
 .container-out {
@@ -109,9 +99,19 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
 }
 
 .rich-text-1 {
-  width: 100ox;
+  width: 100px;
   top:25%;
   left: 30px;
+  position: absolute;
+  font-size: 35rpx;
+  color: rgb(253, 251, 251);
+}
+
+.rich-text-2 {
+  width: 100px;
+  top:25%;
+  left: 280px;
+  float: right;
   position: absolute;
   font-size: 35rpx;
   color: rgb(253, 251, 251);
@@ -143,6 +143,7 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
 }
 
 .award-img{
+  z-index: 10;
   /* margin-left: 4%; */
   /* width: 88%; */
   height: 320px;
@@ -187,8 +188,8 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
   height: 1.7em;
   background-color:  rgb(252, 73, 73);
   border-radius: 50rpx;
-  font-size: 35rpx;
-  line-height: 50rpx;
+  font-size: 42rpx;
+  line-height: 66rpx;
   box-shadow: 1px 2px 1px rgb(114, 43, 43);
 }
 .num-css{
@@ -220,15 +221,17 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
 }
 
 .modal-content {
-  padding: 50rpx 32rpx;
+  padding: 30rpx 32rpx;
 }
 
 .modal-input {
   display: flex;
+  margin: 0 auto;
   background: #fff;
   border: 2rpx solid #ddd;
   border-radius: 4rpx;
-  font-size: 28rpx;
+  font-size: 40rpx;
+  height: 50rpx;
 }
 
 .modal-footer {
@@ -245,4 +248,15 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
   margin: 0 auto;  
   color: #ec5300;
   text-align: center;
+}
+
+.marquee_box {
+  width: 100%;
+  position: relative;
+}
+
+.marquee_text {
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
 }
