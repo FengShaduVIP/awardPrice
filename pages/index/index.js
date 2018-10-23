@@ -7,13 +7,13 @@ Page({
     textValue:null,
     awardDetail:null,
     sixNum: 6,
-    eightNum: 8,
+    eightNum: 8, 
     speed:120,
     times: 0, //转动次数
     cycle: 10, //转动基本次数：即至少需要转动多少次再进入抽奖环节
     awardNum:-1,//抽奖次数
     priceNum: null,//后台返回抽奖号码
-    showModalType:0,// 0：输入手机号，1：中奖页面，2：活动说明页面
+    showModalType:0,// 0：输入手机号，1：中奖页面，2：活动说明页面，3 中奖记录、奖品列表页面
     isCanSelect:false,//是否可以点击抽奖按钮
     times: 0, //转动次数
     phoneNum:null,//输入的手机号
@@ -22,27 +22,23 @@ Page({
     isRunning: false,//是否正在抽奖
     circleList: [],//圆点数组
     awardList: [],//奖品数组
-    awardTextList:[],
-    awardLogList:[],
-    imageAward: [],//奖品图片数组
+    awardTextList:[],//后台奖品列表
+    awardLogList:[],//抽奖记录
+    awardRuleList:[],//活动规则
+    imageAward: [
+      "../../images/1.png",
+      "../../images/2.png",
+      "../../images/3.png",
+      "../../images/4.png",
+      "../../images/5.png",
+      "../../images/6.png",
+      "../../images/7.png",
+      "../../images/8.png"
+    ],//奖品图片数组
     colorCircleFirst: '#FFDF2F',//圆点颜色1
     colorCircleSecond: '#FE4D32',//圆点颜色2
     colorAwardDefault: '#FFFFFF',//奖品默认颜色
     colorAwardSelect: '#DE2A2C',//奖品选中颜色
-    ruleList: [{
-      name: 'div',
-      attrs: {
-        class: 'div_class',
-        style: 'line-height: 35px;padding:10px 10px; color: red; margin-top:10px;'
-      },
-      children: [{
-        name: 'li',
-        children:[{
-          type: 'text',
-          text: 'Hello&nbsp;World!Hello&nbsp;World!Hello&nbsp;World!Hello&nbsp;World!Hello&nbsp;World!',
-        }]
-      }]
-    }]
   },
   initCircleData :function(){
     var _this = this;
@@ -100,21 +96,17 @@ Page({
   initGetData:function(){
     var _this = this;
     call.getData('webpublic/awardlist', function (r) {
-      var imageAward = [];
-      for (var i = 0; i < r.list.length; i++) {
-        imageAward.push(call.picUrl + r.list[i].picUrl);
+      var listData = r.list;
+      for(var i=0;i<listData.length;i++){
+        var item = listData[i];
+        item.picUrl = call.picUrl + item.picUrl;
       }
       _this.setData({
-        awardTextList:r.list,
-        imageAward: imageAward
+        awardTextList: listData
       })
       _this.initAwardListData();
     }, this.fail);
-    call.getData('webpublic/awardLoglist', function (r) {
-      _this.setData({
-        awardLogList: r.list
-      })
-    }, this.fail);
+    
   },
   initAwardListData:function(){
     var _this = this;
@@ -153,6 +145,37 @@ Page({
     //设置圆点数据
     this.initCircleData();
     this.initGetData();
+  },
+  //查询活动规则
+  queryRuleList:function(){
+    var _this = this;
+    var awardId = "";
+    call.getData('webpublic/queryRuleList?awardId=' + awardId, function (r) {
+      var ruleList = r.data;
+      var ruleListObj = [{
+        name: 'div',
+        attrs: {
+          class: 'div_class',
+          style: 'line-height: 35px;padding:10px 10px; color: red; margin-top:10px;'
+        },
+        children: []
+      }]
+      for(var i = 0;i<ruleList.length;i++){
+        var item = ruleList[i];
+        var rule = {
+          name: 'li',
+          children: [{
+            type: 'text',
+            text: item.context,
+          }]
+        }
+        ruleListObj[0].children.push(rule);
+      }
+      
+      _this.setData({
+        awardRuleList: ruleListObj
+      })
+    }, this.fail);
   },
   //设置手机号码
   listenerPhoneInput: function (e) {
@@ -320,14 +343,23 @@ Page({
   //跳转页面
   toRulesPage:function(){
     if (this.data.isRunning) return
+    this.queryRuleList();
     this.setData({
       showModalType:2,
       showModalStatus:true
     });
   },
   //跳转页面
-  toRulesPage2: function () {
+  toAwardPage: function () {
+    var _this = this;
     if (this.data.isRunning) return
+    //查询获奖记录数据
+    call.getData('webpublic/awardLoglist', function (r) {
+      _this.setData({
+        awardLogList: r.list
+      })
+    }, this.fail);
+
     this.setData({
       showModalType: 3,
       showModalStatus: true

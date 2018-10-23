@@ -3,11 +3,11 @@
   <view>
     <image class='bg-img' src="../../images/bg-img.png"></image>
   </view>
-  <view class="rich-text-1" bindtap='toRulesPage2'>
-    活动奖品： 
+  <view class="rich-text-1" bindtap='toAwardPage'>
+    活动奖品
   </view>
   <view class="rich-text-2" bindtap='toRulesPage'>
-    活动规则：
+    活动规则
   </view>
   <view class="container-out">
     <view wx:key="{{index}}" class="circle" wx:for="{{circleList}}" 
@@ -64,15 +64,45 @@
     <view style='width:100%;padding-top:10px;'>
       <image src='../../images/rule.png' style='width:50%;height:25px;margin:0 auto;position: relative;left:25%'></image>
     </view>
-    <rich-text nodes="{{ruleList}}"></rich-text>
+    <rich-text nodes="{{awardRuleList}}"></rich-text>
   </view>
-  <view wx:if='{{showModalType==3}}' style='width:90%;height:200px; margin:0 auto;  border-radius: 36rpx;background-color:#fff;'>
-    <swiper class="swiper_container" display-multiple-items="3" style='z-index:11;' vertical="true" autoplay="true" circular="true" interval="2000">
+  <view wx:if='{{showModalType==3}}' style='width:90%;height:auto; margin:0 auto;  border-radius: 32rpx;background-color:#fff;'>
+    <view id="logList" style="height: 14px;"></view>
+    <swiper class="swiper_container" display-multiple-items="2" style='z-index:11;' 
+      vertical="true" autoplay="true" circular="true" interval="2000">
       <block wx:for="{{awardLogList}}"  wx:key="{{index}}">
         <swiper-item style='z-index:12;'>
           <text>恭喜{{item.phoneNum}}用户，获得{{item.priceName}} {{item.time}}</text>
         </swiper-item>
       </block>
     </swiper>
+    <!--奖品列表-->
+    <scroll-view scroll-y style="height: 300px;" bindscrolltoupper="upper"
+      bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+      <view class="table">
+        <view class="tr bg-w">
+          <view class="th">奖项</view>
+          <view class="th-2">奖品</view>
+        </view>
+        <block wx:for="{{awardTextList}}" wx:key="{{index}}">
+          <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+            <view class="td-1" selectable="true">{{item.id}}</view>
+            <view class="td-2" selectable="true" scroll-y="true" >
+              <text class="th-text"  style="overflow-y:auto;overflow-x:scroll;float:left"
+                selectable="true">{{item.name}}</text>
+                <image style='width:80px;height:60px' src="{{item.picUrl}}"></image>
+            </view>
+          </view>
+          <view class="tr bg-g2" wx:else>
+            <view class="td-1" selectable="true">{{item.id}}</view>
+            <view class="td-2" selectable="true"  scroll-y="true" >
+              <text class="th-text"  style="overflow-y:auto;overflow-x:scroll;float:left" 
+                selectable="true">{{item.name}}</text>
+                <image style='width:80px;height:60px' src="{{item.picUrl}}"></image>
+          </view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
   </view>
 </view>
